@@ -1,13 +1,20 @@
 # Milestones
 
-## Milestone 1 — from-scratch RAG pipeline, fully offline
+## Milestone 1 — from-scratch RAG pipeline, fully offline ✅
 
-- [ ] ingest + chunk — load `.txt`/`.md`, split into overlapping word chunks
-- [ ] embed — encode chunks with sentence-transformers
-- [ ] retrieve — hand-rolled cosine similarity, top-k over an in-memory store
-- [ ] generate — build a grounded prompt, answer via Ollama (`llama3.2`)
-- [ ] show sources — print the retrieved chunks (path + score) used for the answer
-- [ ] persist index — save/load the vector store to disk so indexing runs once
+- [x] ingest + chunk — load `.txt`/`.md`, split into overlapping word chunks
+- [x] embed — encode chunks with sentence-transformers (`all-MiniLM-L6-v2`, 384-dim)
+- [x] retrieve — hand-rolled cosine similarity, top-k over an in-memory store
+- [x] generate — build a grounded prompt, answer via Ollama (`llama3.2`)
+- [x] show sources — print the retrieved chunks (path + score) used for the answer
+- [x] persist index — save/load the vector store to disk so indexing runs once
+
+> **Verification:** ingest/chunk, embed, retrieve, show-sources and persist were
+> run for real over `docs/` (3 docs → 6 chunks → `(6, 384)` vectors; a query for
+> cosine similarity correctly ranks the two relevant chunks top-2). The Ollama
+> generation path (request, streaming token parse, error handling) was verified
+> against a stub of `/api/generate`; run it against a live `llama3.2` by
+> installing Ollama and `ollama pull llama3.2`.
 
 ## Next up (after milestone 1)
 
