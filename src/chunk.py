@@ -5,6 +5,7 @@ word-based chunks. The overlap keeps context from being lost at chunk
 boundaries: a sentence that straddles a boundary still appears whole in one of
 the two neighbouring chunks, so it stays retrievable.
 """
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
@@ -19,13 +20,13 @@ class Chunk:
 
     text: str
     source: str  # path to the file this chunk came from
-    index: int   # 0-based position of this chunk within its source file
+    index: int  # 0-based position of this chunk within its source file
 
     def to_dict(self) -> dict:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, d: dict) -> "Chunk":
+    def from_dict(cls, d: dict) -> Chunk:
         return cls(text=d["text"], source=d["source"], index=d["index"])
 
 
@@ -61,7 +62,7 @@ def chunk_text(text: str, chunk_size: int = 200, overlap: int = 40) -> list[str]
     step = chunk_size - overlap
     chunks: list[str] = []
     for start in range(0, len(words), step):
-        window = words[start:start + chunk_size]
+        window = words[start : start + chunk_size]
         if window:
             chunks.append(" ".join(window))
         if start + chunk_size >= len(words):
