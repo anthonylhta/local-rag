@@ -1,0 +1,6 @@
+# Core dependencies for the local-rag pipeline.
+# Ollama is a separate, external install (see README) and is reached over HTTP
+# using only the Python standard library, so it is not listed here.
+
+numpy>=1.24
+sentence-transformers>=2.2
