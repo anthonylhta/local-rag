@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # The test suite covers chunking, the vector store and the Ollama client
+      # (via a stub). It deliberately does not require torch/sentence-transformers
+      # or a running Ollama, so CI installs only the lightweight tools it needs.
+      - name: Install tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy "ruff>=0.6" "mypy>=1.8" "pytest>=8.0" "build>=1.0"
+
+      - name: Typecheck
+        run: mypy src
+
+      - name: Lint
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Test
+        run: pytest
+
+      - name: Build
+        run: python -m build

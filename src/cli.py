@@ -6,6 +6,7 @@ Usage::
     python -m src.cli query  "your question" [--k 4] [--model llama3.2]
     python -m src.cli chat   [--k 4] [--model llama3.2]
 """
+
 from __future__ import annotations
 
 import argparse

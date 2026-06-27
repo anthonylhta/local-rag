@@ -5,6 +5,7 @@ lazily on first use. The *first ever* run downloads the model weights from
 Hugging Face; after that the weights are cached locally and embedding runs
 fully offline.
 """
+
 from __future__ import annotations
 
 import numpy as np

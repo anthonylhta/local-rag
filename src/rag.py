@@ -5,6 +5,7 @@ into a prompt, calls a local Ollama model over its REST API (stdlib ``urllib``
 only - no extra dependencies), and packages the answer together with the
 sources that were used.
 """
+
 from __future__ import annotations
 
 import json
@@ -35,24 +36,15 @@ class Answer:
 
 def build_prompt(question: str, results: list[SearchResult]) -> str:
     """Assemble the final prompt: instruction + numbered context + question."""
-    blocks = [
-        f"[{r.rank + 1}] (source: {r.chunk.source})\n{r.chunk.text}" for r in results
-    ]
+    blocks = [f"[{r.rank + 1}] (source: {r.chunk.source})\n{r.chunk.text}" for r in results]
     context = "\n\n".join(blocks) if blocks else "(no context retrieved)"
-    return (
-        f"{SYSTEM_INSTRUCTION}\n\n"
-        f"Context:\n{context}\n\n"
-        f"Question: {question}\n"
-        f"Answer:"
-    )
+    return f"{SYSTEM_INSTRUCTION}\n\nContext:\n{context}\n\nQuestion: {question}\nAnswer:"
 
 
 def _ollama_request(payload: dict, host: str, timeout: int):
     url = f"{host.rstrip('/')}/api/generate"
     data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(
-        url, data=data, headers={"Content-Type": "application/json"}
-    )
+    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
     return urllib.request.urlopen(req, timeout=timeout)
 
 

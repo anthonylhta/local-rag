@@ -5,6 +5,7 @@ chunk metadata. Similarity is plain cosine, computed by hand with numpy so the
 mechanics stay visible. The store persists to disk as a ``.npy`` matrix plus
 two small JSON sidecars (the chunks and some metadata).
 """
+
 from __future__ import annotations
 
 import json
@@ -99,7 +100,7 @@ class VectorStore:
         (index_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
     @classmethod
-    def load(cls, index_dir: str | Path) -> "VectorStore":
+    def load(cls, index_dir: str | Path) -> VectorStore:
         index_dir = Path(index_dir)
         meta_path = index_dir / "meta.json"
         if not meta_path.exists():

@@ -46,3 +46,9 @@ htmlcov/
 # Built RAG index artifacts (regenerate with `python -m src.cli index`)
 index/*.npy
 index/*.json
+
+# Local engineering notes / ADRs (never referenced in commits or PR bodies)
+notes/
+
+# Local Claude Code automation (hooks, slash commands, settings)
+.claude/
