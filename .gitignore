@@ -52,3 +52,4 @@ notes/
 
 # Local Claude Code automation (hooks, slash commands, settings)
 .claude/
+CLAUDE.md
